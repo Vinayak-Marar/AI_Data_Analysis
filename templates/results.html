@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Analysis Results</h1>
+<p class="model-badge">Model used: <strong>{{ model_used }}</strong></p>
+
+<h2>Plan</h2>
+<pre>{{ plan }}</pre>
+
+<h2>Findings</h2>
+{% for finding in findings %}
+<div class="finding {{ finding.status }}">
+    <h3>{{ finding.step[:80] }}</h3>
+    <p class="summary">{{ finding.summary }}</p>
+    {% if finding.stdout %}
+    <pre>{{ finding.stdout[:600] }}</pre>
+    {% endif %}
+    {% if finding.chart_path %}
+    <img src="{{ url_for('static', filename='charts/' + finding.chart_path) }}" style="max-width:650px; display:block; margin:12px 0;">
+    {% endif %}
+</div>
+{% endfor %}
+
+<h2>Download Report</h2>
+<a href="/download/report" class="btn">Download Word Report (.docx)</a>
+<br><br>
+<a href="/">← New analysis</a>
+{% endblock %}

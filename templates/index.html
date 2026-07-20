@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>AI Data Analyst</h1>
+
+<form action="/analyze" method="post" enctype="multipart/form-data">
+
+    <label>Upload dataset (CSV / Excel):</label>
+    <input type="file" name="dataset" accept=".csv,.xlsx,.xls" required>
+
+    <label>Your question:</label>
+    <textarea name="question" rows="3"
+        placeholder="e.g. What drives passenger volume across routes?"></textarea>
+
+    <label>Select model:</label>
+    <select name="model_key" class="model-select">
+        {% for key, info in models.items() %}
+        <option value="{{ key }}">{{ info.label }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit">Analyze</button>
+
+</form>
+{% endblock %}
